@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -22,27 +23,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
-        String email = user.getEmail();
-        if (userRepository.findByEmail(email).isPresent()) {
-            return null;
-        } else {
-            return userRepository.save(user);
-        }
+        return userRepository.findByEmail(user.getEmail())
+                .orElseGet(() -> userRepository.save(user));
     }
 
     @Override
     public User update(User user) {
-        String email = user.getEmail();
-        Optional<User> existingUser = userRepository.findByEmail(email);
-        if (existingUser.isPresent()) {
-            if (Objects.equals(existingUser.get().getEmail(), user.getEmail())) {
-                return userRepository.save(user);
-            } else {
-                return create(user);
-            }
-        } else {
-            return create(user);
-        }
+        return userRepository.findById(user.getId())
+                .map(existingUser -> {
+                    if (!existingUser.getEmail().equals(user.getEmail()) && userRepository.findByEmail(user.getEmail()).isPresent()) {
+                        throw new RuntimeException("Email already in use by another user.");
+                    }
+                    return userRepository.save(user);
+                })
+                .orElseThrow(() -> new NoSuchElementException("User not found with ID: " + user.getId()));
     }
 
     @Override

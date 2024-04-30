@@ -8,11 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface EstimationRepository extends JpaRepository<Estimation, Long> {
-    Estimation save(Estimation estimation);
-
-    Estimation update(Estimation estimation);
-
     void delete(Estimation estimation);
-
     Optional<Estimation> findById(Long id);
 }

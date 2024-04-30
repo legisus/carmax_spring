@@ -17,6 +17,7 @@ public class EstimationServiceImpl implements EstimationService {
     public EstimationServiceImpl(EstimationRepository estimationRepository) {
         this.estimationRepository = estimationRepository;
     }
+
     @Override
     public boolean addEstimation(Estimation estimation) {
         estimationRepository.save(estimation);
