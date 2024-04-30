@@ -1,20 +1,20 @@
 package carmax.version001.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.stereotype.Component;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
+@Table(name = "orders")
 public class Order {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
     private Long id;
     private String orderNumber;
     private String date;
@@ -28,6 +28,13 @@ public class Order {
     private String deliveryPrice;
     private String totalPrice;
     private String comment;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User owner;
+
+    @OneToOne
+    @JoinColumn(name = "car_id")
     private Car car;
+
 }

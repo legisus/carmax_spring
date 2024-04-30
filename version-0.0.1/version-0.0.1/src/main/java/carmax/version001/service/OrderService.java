@@ -1,14 +1,16 @@
 package carmax.version001.service;
 
 import carmax.version001.model.Order;
-import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 
 public interface OrderService {
     void createOrder(Order order);
     void deleteOrder(Long orderId);
     void updateOrder(Order newOrder);
-    void getAllOrders();
-    void getOrdersByUserId(Long userId);
-    void getOrderById(Long orderId);
+    List<Order> getAllOrders();
+    List<Order> getOrdersByUserId(Long userId);
+    Optional<Order> getOrderById(Long orderId);
 }

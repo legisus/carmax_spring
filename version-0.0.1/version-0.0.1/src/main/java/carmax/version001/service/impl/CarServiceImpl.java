@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class CarServiceImpl implements CarService {
@@ -25,10 +24,10 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car updateCar(Car car) {
-        if(Objects.equals(car.getVin(), carRepository.findCarByVin(car.getVin()).get().getVin())){
+        if (carRepository.findCarByVin(car.getVin()).isPresent()) {
             return carRepository.save(car);
         }
-        return null;
+        return null; // Or throw an exception if you prefer
     }
 
     @Override
@@ -43,6 +42,6 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car getByVin(String vin) {
-        return carRepository.findCarByVin(vin).get();
+        return carRepository.findCarByVin(vin).orElse(null); // Return null or handle it differently
     }
 }

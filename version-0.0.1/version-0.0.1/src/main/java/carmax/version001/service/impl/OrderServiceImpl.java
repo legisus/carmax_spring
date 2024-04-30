@@ -6,6 +6,9 @@ import carmax.version001.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class OrderServiceImpl implements OrderService {
 
@@ -32,17 +35,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void getAllOrders() {
-        orderRepository.findAll();
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll(); // Using the JpaRepository inherited method
     }
 
     @Override
-    public void getOrdersByUserId(Long userId) {
-        orderRepository.getAllByOwnerId(userId);
+    public List<Order> getOrdersByUserId(Long userId) {
+        return orderRepository.findAllByOwnerId(userId); // Corrected method name
     }
 
     @Override
-    public void getOrderById(Long orderId) {
-        orderRepository.findById(orderId);
+    public Optional<Order> getOrderById(Long orderId) {
+        return orderRepository.findById(orderId);
     }
 }

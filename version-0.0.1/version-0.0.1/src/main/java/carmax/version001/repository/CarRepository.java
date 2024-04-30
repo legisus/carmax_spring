@@ -9,10 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, Long> {
-    Car save(Car car);
-    Car update(Car car);
-    void delete(Car car);
-    Optional<Car> findById(Long id);
     Optional<Car> findCarByVin(String vin);
     Optional<List<Car>> findCarsByMillage(Integer millage);
 }
