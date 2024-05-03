@@ -8,7 +8,6 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//@RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
 @Table(name = "estimations")
@@ -26,6 +25,7 @@ public class Estimation {
 
     private Integer estimatedRetailValue;
 
+    @ToString.Exclude
     @OneToOne(mappedBy = "estimation")
     private Car car;
 }

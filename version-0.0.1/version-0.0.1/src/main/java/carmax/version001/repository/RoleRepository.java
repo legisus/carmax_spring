@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Repository
-@Transactional
+//@Transactional
 public interface RoleRepository extends JpaRepository<Role, Long> {
     Optional<Role> findByName(String name);
 }

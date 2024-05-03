@@ -36,7 +36,10 @@ public class Role {
 
     @Override
     public String toString() {
-        return String.format("Role {name = %s}", getName());
+        return "Role {" +
+                "id = " + id +
+                ", name = '" + name + '\'' +
+                '}';
     }
 
     @Override

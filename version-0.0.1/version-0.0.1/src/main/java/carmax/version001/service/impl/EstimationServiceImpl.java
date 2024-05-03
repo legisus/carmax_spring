@@ -3,12 +3,14 @@ package carmax.version001.service.impl;
 import carmax.version001.model.Estimation;
 import carmax.version001.repository.EstimationRepository;
 import carmax.version001.service.EstimationService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+//@Transactional
 public class EstimationServiceImpl implements EstimationService {
 
     private final EstimationRepository estimationRepository;
