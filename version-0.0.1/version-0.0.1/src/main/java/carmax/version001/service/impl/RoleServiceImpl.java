@@ -4,19 +4,24 @@ package carmax.version001.service.impl;
 import carmax.version001.model.Role;
 import carmax.version001.repository.RoleRepository;
 import carmax.version001.service.RoleService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+//@Transactional
 public class RoleServiceImpl implements RoleService {
-    @Autowired
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
-    @Transactional
+    @Autowired
+    public RoleServiceImpl(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
+
+    //    @Transactional
     @Override
     public Role create(Role role) {
         String name = role.getName();
@@ -29,13 +34,13 @@ public class RoleServiceImpl implements RoleService {
         return role;
     }
 
-    @Transactional
+//    @Transactional
     @Override
     public Role readById(long id) {
         return roleRepository.findById(id).orElse(null);
     }
 
-    @Transactional
+//    @Transactional
     @Override
     public Role update(Role role) {
         Optional<Role> existRoleOpt = roleRepository.findById(role.getId());
@@ -48,13 +53,13 @@ public class RoleServiceImpl implements RoleService {
         return existRoleOpt.orElseGet(() -> create(role));
     }
 
-    @Transactional
+//    @Transactional
     @Override
     public void delete(long id) {
         roleRepository.deleteById(id);
     }
 
-    @Transactional
+//    @Transactional
     @Override
     public List<Role> getAll() {
         return roleRepository.findAll();

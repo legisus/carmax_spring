@@ -3,12 +3,14 @@ package carmax.version001.service.impl;
 import carmax.version001.model.Car;
 import carmax.version001.repository.CarRepository;
 import carmax.version001.service.CarService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+//@Transactional
 public class CarServiceImpl implements CarService {
 
     private final CarRepository carRepository;

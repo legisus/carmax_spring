@@ -12,7 +12,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//@RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString
 @Table(name = "users")
@@ -22,7 +21,7 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
 
@@ -32,19 +31,34 @@ public class User {
     private String password;
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_selected_cars",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),  // Corrected to match the @Column name
             inverseJoinColumns = @JoinColumn(name = "car_id", referencedColumnName = "car_id")  // Assuming 'id' is the @Column name in Car entity
     )
+    @ToString.Exclude
     private Set<Car> mySelectedCars = new HashSet<>();
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
+    @ToString.Exclude
     private Set<Car> boughtCars = new HashSet<>();
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
+    @ToString.Exclude
     private Set<Order> myOrders = new HashSet<>();
+
+//    @Override
+//    public String toString() {
+//        return "User{" +
+//                "id=" + id +
+//                ", role=" + role +
+//                ", firstName='" + firstName + '\'' +
+//                ", lastName='" + lastName + '\'' +
+//                ", email='" + email + '\'' +
+//                ", password='" + password + '\'' +
+//                '}';
+//    }
 }
 
 
