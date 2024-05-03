@@ -3,6 +3,7 @@ package carmax.version001.service.impl;
 import carmax.version001.model.Order;
 import carmax.version001.repository.OrderRepository;
 import carmax.version001.service.OrderService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+//@Transactional
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;

@@ -16,7 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 //@RequiredArgsConstructor
 @EqualsAndHashCode
-@ToString
+//@ToString
 @Table(name = "cars")
 public class Car {
     @Id
@@ -52,8 +52,12 @@ public class Car {
     private Set<User> usersSelected = new HashSet<>();
 
     @ManyToOne
-//    @JoinColumn(name = "owner_id")
     @JoinColumn(name = "user_id")
     private User owner;
+
+    @Override
+    public String toString() {
+        return String.format("Car {vin = %s, year = %d, make = %s, model = %s}", vin, year, make, model);
+    }
 
 }

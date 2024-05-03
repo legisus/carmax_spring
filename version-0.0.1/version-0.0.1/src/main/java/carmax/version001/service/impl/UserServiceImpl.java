@@ -3,6 +3,7 @@ package carmax.version001.service.impl;
 import carmax.version001.model.User;
 import carmax.version001.repository.UserRepository;
 import carmax.version001.service.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
+//@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
