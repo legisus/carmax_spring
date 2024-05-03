@@ -15,9 +15,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//@RequiredArgsConstructor
 @EqualsAndHashCode
-//@ToString
 @Table(name = "cars")
 public class Car {
     @Id
