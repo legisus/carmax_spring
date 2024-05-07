@@ -24,7 +24,7 @@ public class RoleServiceImpl implements RoleService {
     public Role create(Role role) {
         String name = role.getName();
         Optional<Role> findByNameOpt = roleRepository.findByName(name);
-        if (!findByNameOpt.isPresent()) {
+        if (findByNameOpt.isEmpty()) {
             roleRepository.save(role);
         } else {
             return role;
