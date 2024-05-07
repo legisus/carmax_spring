@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,9 +15,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//@RequiredArgsConstructor
 @EqualsAndHashCode
-//@ToString
 @Table(name = "cars")
 public class Car {
     @Id
@@ -35,12 +34,7 @@ public class Car {
     private Transmission transmission = Transmission.NA;
     private String engine;
     private String color;
-    private Integer millage;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", referencedColumnName = "id")
-    private Estimation estimation;
-
+    private Integer mileage;
     private Integer soldPrice;
     private String dateOfAuction;
     private String location;
@@ -48,12 +42,19 @@ public class Car {
     private String lane;
     private String defects;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", referencedColumnName = "id")
+    private Estimation estimation;
+
     @ManyToMany(mappedBy = "mySelectedCars", cascade = CascadeType.ALL)
     private Set<User> usersSelected = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User owner;
+
+    @OneToMany(mappedBy = "car")
+    private List<Bid> bids;
 
     @Override
     public String toString() {

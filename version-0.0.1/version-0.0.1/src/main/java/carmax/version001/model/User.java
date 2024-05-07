@@ -48,6 +48,10 @@ public class User {
     @ToString.Exclude
     private Set<Order> myOrders = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @ToString.Exclude
+    private List<Bid> bids;
+
 //    @Override
 //    public String toString() {
 //        return "User{" +
