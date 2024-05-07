@@ -3,6 +3,8 @@ package carmax.version001.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -17,13 +19,12 @@ public class Order {
     @Column(name = "order_id")
     private Long id;
     private String orderNumber;
-    private String date;
+    private LocalDate date;
     private String status;
     private String paymentMethod;
     private String deliveryMethod;
     private String deliveryAddress;
-    private String deliveryDate;
-    private String deliveryTime;
+    private LocalDate deliveryDate;
     private String deliveryStatus;
     private String deliveryPrice;
     private String totalPrice;
