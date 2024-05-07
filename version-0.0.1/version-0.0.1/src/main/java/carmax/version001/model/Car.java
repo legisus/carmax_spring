@@ -6,6 +6,7 @@ import carmax.version001.model.carInner.Transmission;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,7 +37,7 @@ public class Car {
     private String color;
     private Integer mileage;
     private Integer soldPrice;
-    private String dateOfAuction;
+    private LocalDate dateOfAuction;
     private String location;
     private Integer runNumber;
     private String lane;
