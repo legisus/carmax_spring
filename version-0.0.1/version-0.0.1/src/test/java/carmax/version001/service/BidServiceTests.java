@@ -85,13 +85,17 @@ class BidServiceTests {
         roleService.create(role);
 
         User user = new User();
-        user.setRole(role);
+        user.setRole(roleService.readById(1));
         user.setFirstName("Jonn");
         user.setLastName("Smith");
         user.setEmail("j.smith@gmail.com");
         user.setPassword("H1b3rn14n!");
         user.setBids(bidService.findByBidPrice(200));
         userService.create(user);
+
+        Bid updatedBid = bidService.findByBidPrice(200).get(0);
+        updatedBid.setUser(user);
+        bidService.updateBid(updatedBid);
 
         List<Bid> bids = bidService.findByUser(user);
         assertFalse(bids.isEmpty(), "Bids list should not be empty");
@@ -107,6 +111,10 @@ class BidServiceTests {
         car.setMileage(10000);
         car.setBids(bidService.findByBidPrice(200));
         carService.addCar(car);
+
+        Bid updatedBid = bidService.findByBidPrice(200).get(0);
+        updatedBid.setCar(car);
+        bidService.updateBid(updatedBid);
 
         List<Bid> bids = bidService.findByCar(car);
         assertFalse(bids.isEmpty(), "Bids list should not be empty");

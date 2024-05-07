@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -12,7 +13,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 @ToString
 @Table(name = "users")
 public class User {
@@ -52,17 +52,22 @@ public class User {
     @ToString.Exclude
     private List<Bid> bids;
 
-//    @Override
-//    public String toString() {
-//        return "User{" +
-//                "id=" + id +
-//                ", role=" + role +
-//                ", firstName='" + firstName + '\'' +
-//                ", lastName='" + lastName + '\'' +
-//                ", email='" + email + '\'' +
-//                ", password='" + password + '\'' +
-//                '}';
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, email, password);
+    }
 }
 
 
