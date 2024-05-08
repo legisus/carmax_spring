@@ -30,6 +30,9 @@ public class User {
     private String email;
     private String password;
 
+    @OneToOne(mappedBy = "user")
+    private Balance balance;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
