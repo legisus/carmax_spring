@@ -37,11 +37,16 @@ public class Car {
     private String color;
     private Integer mileage;
     private Integer soldPrice;
-    private LocalDate dateOfAuction;
-    private String location;
+//    private LocalDate dateOfAuction;
+//    private String location;
     private Integer runNumber;
     private String lane;
     private String defects;
+    private String picturesUrl;
+
+    @ManyToOne
+    @JoinColumn(name = "auction_id")
+    private Auction auction;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id", referencedColumnName = "id")
