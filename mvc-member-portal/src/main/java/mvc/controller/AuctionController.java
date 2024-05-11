@@ -1,4 +1,4 @@
-package core.controller;
+package mvc.controller;
 
 import core.model.Auction;
 import core.model.enums.Locations;
@@ -16,7 +16,7 @@ public class AuctionController {
     private final AuctionService auctionService;
 
     @Autowired
-    AuctionController (AuctionService auctionService) {
+    AuctionController(AuctionService auctionService) {
         this.auctionService = auctionService;
     }
 
@@ -29,7 +29,7 @@ public class AuctionController {
                 .map(Auction::getLocation)
                 .toList();
         model.addAttribute("locations", locations);
-        return "auctions";  // Name of your HTML view
+        return "auctions";
     }
 }
 
