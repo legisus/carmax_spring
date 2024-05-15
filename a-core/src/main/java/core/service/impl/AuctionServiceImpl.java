@@ -1,11 +1,13 @@
 package core.service.impl;
 
 import core.model.Auction;
+import core.model.enums.Locations;
 import core.repository.AuctionRepository;
 import core.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,5 +45,10 @@ public class AuctionServiceImpl implements AuctionService {
     @Override
     public List<Auction> getAll() {
         return auctionRepository.findAll();
+    }
+
+    @Override
+    public Auction getAuctionByLocationAndDate(Locations location, LocalDate date) {
+        return auctionRepository.findByLocationAndDateOfAuction(location, date);
     }
 }

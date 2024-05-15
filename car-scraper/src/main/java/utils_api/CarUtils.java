@@ -2,7 +2,11 @@ package utils_api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import core.model.Auction;
 import core.model.Car;
+import scanner.dto.AuctionDto;
+import scanner.dto.DtoConverter;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,6 +23,42 @@ public class CarUtils {
             // Convert the list of cars to JSON string
             String json = mapper.writeValueAsString(cars);
             // Save this string to a properties file
+            Files.write(Paths.get(path), json.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveAuctionsListToJsonFile(List<Auction> auctions, String path) {
+        ObjectMapper mapper = new ObjectMapper();
+        // Register the JavaTimeModule to handle Java 8 date/time types
+        mapper.registerModule(new JavaTimeModule());
+
+        // Convert model objects to DTOs
+        List<AuctionDto> auctionDTOs = DtoConverter.toAuctionDtoList(auctions);
+
+        try {
+            // Convert the list of auctionDTOs to JSON string
+            String json = mapper.writeValueAsString(auctionDTOs);
+            // Save this string to a file
+            Files.write(Paths.get(path), json.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveAuctionToJsonFile(Auction auction, String path) {
+        ObjectMapper mapper = new ObjectMapper();
+        // Register the JavaTimeModule to handle Java 8 date/time types
+        mapper.registerModule(new JavaTimeModule());
+
+        // Convert model objects to DTOs
+        AuctionDto auctionDto = DtoConverter.toAuctionDto(auction);
+
+        try {
+            // Convert the list of auctionDTOs to JSON string
+            String json = mapper.writeValueAsString(auctionDto);
+            // Save this string to a file
             Files.write(Paths.get(path), json.getBytes());
         } catch (IOException e) {
             e.printStackTrace();

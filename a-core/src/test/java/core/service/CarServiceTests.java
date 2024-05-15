@@ -5,7 +5,6 @@ import core.model.Car;
 import core.model.enums.Drive;
 import core.model.enums.Locations;
 import core.model.enums.Transmission;
-import core.service.CarService;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,7 +34,7 @@ class CarServiceTests {
     void createCarTest() {
 
         Auction auction = new Auction();
-        auction.setDateTimeOfAuction(LocalDateTime.now());
+//        auction.setDateTimeOfAuction(LocalDateTime.now());
         auction.setLocation(Locations.BOISE);
 
         Car car = new Car();
@@ -83,7 +81,7 @@ class CarServiceTests {
     @Order(4)
     void getAllCarsTest() {
         Auction auction = new Auction();
-        auction.setDateTimeOfAuction(LocalDateTime.now());
+//        auction.setDateTimeOfAuction(LocalDateTime.now());
         auction.setLocation(Locations.BOISE);
 
         Car car = new Car();

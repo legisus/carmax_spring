@@ -4,7 +4,8 @@ import core.model.enums.Locations;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Set;
 
 @Entity
@@ -21,7 +22,8 @@ public class Auction {
     @Column(name = "auction_id")
     private Long id;
 
-    private LocalDateTime dateTimeOfAuction;
+    private LocalDate dateOfAuction;
+    private LocalTime timeOfAuction;
     private Locations location;
 
     @OneToMany(mappedBy = "auction")

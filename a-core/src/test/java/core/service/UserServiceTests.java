@@ -2,8 +2,6 @@ package core.service;
 
 import core.model.Role;
 import core.model.User;
-import core.service.RoleService;
-import core.service.UserService;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

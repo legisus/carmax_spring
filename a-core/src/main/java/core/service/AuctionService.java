@@ -1,7 +1,9 @@
 package core.service;
 
 import core.model.Auction;
+import core.model.enums.Locations;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface AuctionService {
@@ -10,4 +12,6 @@ public interface AuctionService {
     Auction update(Auction auction);
     void delete(long id);
     List<Auction> getAll();
+
+    Auction getAuctionByLocationAndDate(Locations location, LocalDate date);
 }
