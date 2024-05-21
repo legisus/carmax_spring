@@ -48,8 +48,11 @@ public class GetAuctionData {
 
         dis.cmx.openCarMaxActionPage();
         dis.cmx.signInCarMax();
-        dis.cmx.goToCarMaxAuctions();
-        dis.cmx.goToAvailableAuction(dis.lib.getAuction().getLocation().getLocation());
+//        dis.lib.setUrl("https://www.carmaxauctions.com/search?view=detailed&sort=mileage&direction=asc&weblocationnames=Rochester&weblocationnames=Duarte&weblocationnames=Irvine&weblocationnames=Oxnard&weblocationnames=Murrieta&weblocationnames=Oceanside&pageSize=250");
+        dis.lib.setUrl("https://www.carmaxauctions.com/search?view=list&sort=mileage&direction=asc&weblocationnames=Duarte&weblocationnames=Irvine&weblocationnames=Oxnard&weblocationnames=Murrieta&weblocationnames=Oceanside&pageSize=250");
+        dis.cmx.openPage(dis.lib.getUrl());
+//        dis.cmx.goToCarMaxAuctions();
+//        dis.cmx.goToAvailableAuction(dis.lib.getAuction().getLocation().getLocation());
         dis.cmx.closeDialogIfAppeared();
 
         dis.lib.setNewCarList(dis.cmx.saveAllCarsFromElementsWithScroll());

@@ -16,4 +16,5 @@ public class GetAuctionLib {
     private List<Car> newCarList;
     private List<Car> uniqueCars;
     private Auction auction;
+    private String url;
 }

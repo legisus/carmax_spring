@@ -51,6 +51,10 @@ public class CarMaxScraper {
         homePage.openPageByUrl("https://www.carmaxauctions.com/");
     }
 
+    public void openPage(String url) {
+        homePage.openPageByUrl(url);
+    }
+
     public void signInCarMax() {
         basePage.waitForPageLoadComplete(3000);
         homePage.clickSignInButton();
