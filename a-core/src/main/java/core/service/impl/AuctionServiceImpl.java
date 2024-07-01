@@ -23,6 +23,11 @@ public class AuctionServiceImpl implements AuctionService {
 
     @Override
     public Auction create(Auction auction) {
+        // Check if an auction with the same location and date already exists
+        Auction existingAuction = auctionRepository.findByLocationAndDateOfAuction(auction.getLocation(), auction.getDateOfAuction());
+        if (existingAuction != null) {
+            return existingAuction;
+        }
         return auctionRepository.save(auction);
     }
 

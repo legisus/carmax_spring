@@ -52,6 +52,7 @@ public class CarMaxScraper {
     }
 
     public void openPage(String url) {
+        homePage.waitForPageLoadComplete(10000);
         homePage.openPageByUrl(url);
     }
 

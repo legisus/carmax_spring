@@ -1,5 +1,8 @@
 package scanner.dispetchers;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import scanner.defenitionSteps.CarMaxScraper;
 import scanner.defenitionSteps.JdpScraper;
 import scanner.defenitionSteps.MainheimScraper;
@@ -14,6 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import scanner.utils.UrlLocationBuilder;
 import utils_api.CarUtils;
 
 import java.time.LocalDate;
@@ -24,8 +28,9 @@ import java.util.Set;
 
 
 @Slf4j
-@SpringBootApplication(exclude={DataSourceAutoConfiguration.class})
+@SpringBootApplication
 @ComponentScan(basePackages = {"core", "scanner"})
+@EnableJpaRepositories(basePackages = "core.repository")
 public class DispatcherAddCarsToAuction {
 
 
@@ -48,19 +53,17 @@ public class DispatcherAddCarsToAuction {
 
 
     public static void main(String[] args) {
+        ApplicationContext context = SpringApplication.run(DispatcherAddCarsToAuction.class, args);
+//        SpringApplication.run(DispatcherAddCarsToAuction.class, args);
+
         auction.setLocation(Locations.EL_PASO);
-        auction.setDateOfAuction(LocalDate.of(2024, 5, 13));
+        auction.setDateOfAuction(LocalDate.of(2024, 7, 1));
         auction.setTimeOfAuction(LocalTime.of(11, 0));
-
-
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-        context.scan("core");
-        context.refresh();
 
         AuctionService auctionService = context.getBean(AuctionService.class);
         CarService carService = context.getBean(CarService.class);
-
-        DispatcherAddCarsToAuction dispatcher = new DispatcherAddCarsToAuction(new CarMaxScraper(), new JdpScraper(), new MainheimScraper());
+        DispatcherAddCarsToAuction dispatcher = context.getBean(DispatcherAddCarsToAuction.class);
+//        DispatcherAddCarsToAuction dispatcher = new DispatcherAddCarsToAuction(new CarMaxScraper(), new JdpScraper(), new MainheimScraper());
 
         auctionService.create(auction);
 
@@ -73,8 +76,7 @@ public class DispatcherAddCarsToAuction {
 
         dispatcher.cmx.openCarMaxActionPage();
         dispatcher.cmx.signInCarMax();
-        dispatcher.cmx.goToCarMaxAuctions();
-        dispatcher.cmx.goToAvailableAuction(auction.getLocation().getCity());
+        dispatcher.cmx.openPage(UrlLocationBuilder.buildUrl(Locations.EL_PASO));
         dispatcher.cmx.closeDialogIfAppeared();
 
         newCarList = dispatcher.cmx.saveAllCarsFromElementsWithScroll();
@@ -97,8 +99,6 @@ public class DispatcherAddCarsToAuction {
 
         auction.setCars(Set.copyOf(carList));
         auctionService.update(auction);
-
-        context.close();
     }
 
 }

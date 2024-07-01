@@ -13,7 +13,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 @Table(name = "auctions")
 public class Auction {
@@ -22,10 +22,11 @@ public class Auction {
     @Column(name = "auction_id")
     private Long id;
 
+    @EqualsAndHashCode.Include
     private LocalDate dateOfAuction;
     private LocalTime timeOfAuction;
     private Locations location;
 
-    @OneToMany(mappedBy = "auction")
+    @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Car> cars;
 }
