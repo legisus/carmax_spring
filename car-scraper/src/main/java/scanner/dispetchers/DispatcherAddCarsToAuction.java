@@ -56,9 +56,9 @@ public class DispatcherAddCarsToAuction {
         ApplicationContext context = SpringApplication.run(DispatcherAddCarsToAuction.class, args);
 //        SpringApplication.run(DispatcherAddCarsToAuction.class, args);
 
-        auction.setLocation(Locations.EL_PASO);
-        auction.setDateOfAuction(LocalDate.of(2024, 7, 1));
-        auction.setTimeOfAuction(LocalTime.of(11, 0));
+        auction.setLocation(Locations.MURRIETA);
+        auction.setDateOfAuction(LocalDate.of(2024, 7, 15));
+        auction.setTimeOfAuction(LocalTime.of(9, 0));
 
         AuctionService auctionService = context.getBean(AuctionService.class);
         CarService carService = context.getBean(CarService.class);
@@ -76,7 +76,7 @@ public class DispatcherAddCarsToAuction {
 
         dispatcher.cmx.openCarMaxActionPage();
         dispatcher.cmx.signInCarMax();
-        dispatcher.cmx.openPage(UrlLocationBuilder.buildUrl(Locations.EL_PASO));
+        dispatcher.cmx.openPage(UrlLocationBuilder.buildUrl(auction.getLocation()));
         dispatcher.cmx.closeDialogIfAppeared();
 
         newCarList = dispatcher.cmx.saveAllCarsFromElementsWithScroll();
@@ -100,5 +100,4 @@ public class DispatcherAddCarsToAuction {
         auction.setCars(Set.copyOf(carList));
         auctionService.update(auction);
     }
-
 }
