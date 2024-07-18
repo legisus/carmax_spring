@@ -28,9 +28,9 @@ public class StartController {
     public String startAuctionProcess() throws Exception {
 
         Auction auction = new Auction();
-        auction.setLocation(Locations.EL_PASO);
-        auction.setDateOfAuction(LocalDate.of(2024, 7, 1));
-        auction.setTimeOfAuction(LocalTime.of(11, 0));
+        auction.setLocation(Locations.MURRIETA);
+        auction.setDateOfAuction(LocalDate.of(2024, 7, 22));
+        auction.setTimeOfAuction(LocalTime.of(9, 0));
 
         dispatcher.run(auction);
         return "Auction process started!";

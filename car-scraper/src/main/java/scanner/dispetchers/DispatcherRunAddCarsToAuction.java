@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import scanner.defenitionSteps.CarMaxScraper;
 import scanner.defenitionSteps.JdpScraper;
 import scanner.defenitionSteps.MainheimScraper;
+import scanner.utils.UrlLocationBuilder;
 import utils_api.CarUtils;
 
 import java.util.ArrayList;
@@ -31,6 +32,10 @@ public class DispatcherRunAddCarsToAuction {
         this.auctionService = auctionService;
     }
 
+    static List<Car> carList;
+    static List<Car> newCarList;
+    static List<Car> uniqueCars;
+
     public void run(Auction auction) throws Exception {
         // Add your existing logic here
         auctionService.create(auction);
@@ -38,16 +43,16 @@ public class DispatcherRunAddCarsToAuction {
         Set<Car> setCars = auctionService.getAuctionByLocationAndDate(auction.getLocation(),
                 auction.getDateOfAuction()).getCars();
 
-        List<Car> carList = new ArrayList<>(setCars);
+        carList = new ArrayList<>(setCars);
 
         //*************************1.CARMAX***************************
 
         cmx.openCarMaxActionPage();
         cmx.signInCarMax();
-        cmx.openPage(auction.getLocation().getLocation());
+        cmx.openPage(UrlLocationBuilder.buildUrl(auction.getLocation()));
         cmx.closeDialogIfAppeared();
 
-        List<Car> newCarList = cmx.saveAllCarsFromElementsWithScroll();
+        newCarList = cmx.saveAllCarsFromElementsWithScroll();
 
         if (carList == null) carList = newCarList;
 

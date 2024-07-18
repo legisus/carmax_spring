@@ -54,10 +54,10 @@ public class DispatcherAddCarsToAuction {
 
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(DispatcherAddCarsToAuction.class, args);
-//        SpringApplication.run(DispatcherAddCarsToAuction.class, args);
+        SpringApplication.run(DispatcherAddCarsToAuction.class, args);
 
         auction.setLocation(Locations.MURRIETA);
-        auction.setDateOfAuction(LocalDate.of(2024, 7, 15));
+        auction.setDateOfAuction(LocalDate.of(2024, 7, 22));
         auction.setTimeOfAuction(LocalTime.of(9, 0));
 
         AuctionService auctionService = context.getBean(AuctionService.class);
@@ -99,5 +99,12 @@ public class DispatcherAddCarsToAuction {
 
         auction.setCars(Set.copyOf(carList));
         auctionService.update(auction);
+
+
+
+        //run from SB
+
+
+
     }
 }

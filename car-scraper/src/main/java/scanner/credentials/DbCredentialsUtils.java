@@ -2,7 +2,7 @@ package scanner.credentials;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import utils_api.ConfigConstant;
+import utils_api.ConfigData;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,7 +22,7 @@ public class DbCredentialsUtils {
 
      public void loadCredentials() {
 
-            try (FileInputStream fis = new FileInputStream(ConfigConstant.URI_PROPERTIES_FILE_DB)) {
+            try (FileInputStream fis = new FileInputStream(ConfigData.URI_PROPERTIES_FILE_DB)) {
                 props.load(fis);
                 username = props.getProperty("username.db");
                 password = props.getProperty("password.db");

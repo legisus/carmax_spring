@@ -2,7 +2,7 @@ package scanner.credentials;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import utils_api.ConfigConstant;
+import utils_api.ConfigData;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -26,7 +26,7 @@ public class CarMaxAuctionCredentialsUtils {
     private void loadCredentials() {
 
 
-        try (InputStream is = new FileInputStream(ConfigConstant.URI_PROPERTIES_FILE_CARMAX)) {
+        try (InputStream is = new FileInputStream(ConfigData.URI_PROPERTIES_FILE_CARMAX)) {
             if (is == null) {
                 log.error("Properties file not found");
                 throw new FileNotFoundException("carmax.properties not found in classpath");
