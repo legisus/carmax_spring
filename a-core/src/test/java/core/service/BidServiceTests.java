@@ -110,7 +110,7 @@ class BidServiceTests {
         car.setYear(2015);
         car.setMileage(10000);
         car.setBids(bidService.findByBidPrice(200));
-        carService.addCar(car);
+        carService.addOrUpdateCar(car);
 
         Bid updatedBid = bidService.findByBidPrice(200).get(0);
         updatedBid.setCar(car);

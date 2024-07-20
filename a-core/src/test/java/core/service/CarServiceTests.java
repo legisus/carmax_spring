@@ -12,8 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.time.LocalDateTime;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
@@ -50,7 +48,7 @@ class CarServiceTests {
         car.setAuction(auction);
         car.setSoldPrice(15000);
 
-        Car savedCar = carService.addCar(car);
+        Car savedCar = carService.addOrUpdateCar(car);
         assertNotNull(savedCar.getId(), "Car should have an id after being saved");
         assertEquals(car.getVin(), savedCar.getVin(), "VIN should match");
     }
@@ -72,7 +70,7 @@ class CarServiceTests {
         car.setColor("Red");
         car.setMileage(35000);
 
-        Car updatedCar = carService.addCar(car);
+        Car updatedCar = carService.addOrUpdateCar(car);
         assertEquals("Red", updatedCar.getColor(), "Color should be updated");
         assertEquals(35000, updatedCar.getMileage(), "Mileage should be updated");
     }
@@ -97,7 +95,7 @@ class CarServiceTests {
         car.setAuction(auction);
         car.setSoldPrice(15000);
 
-        carService.addCar(car);
+        carService.addOrUpdateCar(car);
 
         assertTrue(carService.getAll().size() >= 2, "There should be minimum 2 cars in the database");
     }

@@ -14,17 +14,13 @@ import core.service.CarService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import scanner.utils.UrlLocationBuilder;
 import utils_api.CarUtils;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @Slf4j
@@ -65,10 +61,13 @@ public class DispatcherAddCarsToAuction {
         DispatcherAddCarsToAuction dispatcher = context.getBean(DispatcherAddCarsToAuction.class);
 //        DispatcherAddCarsToAuction dispatcher = new DispatcherAddCarsToAuction(new CarMaxScraper(), new JdpScraper(), new MainheimScraper());
 
-        auctionService.create(auction);
+        auctionService.createOrUpdate(auction);
 
-        Set<Car> setCars = auctionService.getAuctionByLocationAndDate(auction.getLocation(),
-                auction.getDateOfAuction()).getCars();
+//        Set<Car> setCars = auctionService.getByLocationAndDate(auction.getLocation(),
+//                auction.getDateOfAuction()).getCars();
+
+        Optional<Auction> optionalAuction = auctionService.getByLocationAndDate(auction.getLocation(), auction.getDateOfAuction());
+        Set<Car> setCars = optionalAuction.map(Auction::getCars).orElse(Collections.emptySet());
 
         carList = new ArrayList<>(setCars);
 

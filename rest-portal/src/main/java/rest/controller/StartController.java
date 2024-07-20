@@ -1,38 +1,45 @@
 package rest.controller;
 
 import core.model.Auction;
-import core.model.enums.Locations;
 import core.service.AuctionService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import rest.dto.AuctionRequestDto;
+import rest.dto.LoginDto;
 import scanner.dispetchers.DispatcherRunAddCarsToAuction;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
+import scanner.dispetchers.LoginToCarMaxPageDisp;
 
 @RestController
 @RequestMapping("/start")
 public class StartController {
 
     private final AuctionService auctionService;
-    private final DispatcherRunAddCarsToAuction dispatcher;
+    private final DispatcherRunAddCarsToAuction dispatcherRunAddCarsToAuction;
+    private final LoginToCarMaxPageDisp loginToCarmaxPageDisp;
 
     @Autowired
-    public StartController(AuctionService auctionService, DispatcherRunAddCarsToAuction dispatcher) {
+    public StartController(AuctionService auctionService,
+                           DispatcherRunAddCarsToAuction dispatcherRunAddCarsToAuction,
+                           LoginToCarMaxPageDisp loginToCarmaxPageDisp) {
         this.auctionService = auctionService;
-        this.dispatcher = dispatcher;
+        this.dispatcherRunAddCarsToAuction = dispatcherRunAddCarsToAuction;
+        this.loginToCarmaxPageDisp = loginToCarmaxPageDisp;
     }
-    @GetMapping
-    public String startAuctionProcess() throws Exception {
-
+    @PostMapping("auction")
+    public String startAuctionProcess(@Valid @RequestBody AuctionRequestDto auctionRequestDto) throws Exception {
         Auction auction = new Auction();
-        auction.setLocation(Locations.MURRIETA);
-        auction.setDateOfAuction(LocalDate.of(2024, 7, 22));
-        auction.setTimeOfAuction(LocalTime.of(9, 0));
+        auction.setLocation(auctionRequestDto.getLocation());
+        auction.setDateOfAuction(auctionRequestDto.getDateOfAuction());
+        auction.setTimeOfAuction(auctionRequestDto.getTimeOfAuction());
 
-        dispatcher.run(auction);
-        return "Auction process started!";
+        dispatcherRunAddCarsToAuction.run(auction);
+        return "Auction saved!";
+    }
+
+    @PostMapping("login")
+    public String loginCarMaxPage(@Valid @RequestBody LoginDto loginDto) throws Exception {
+        loginToCarmaxPageDisp.run(loginDto.getUsername(), loginDto.getPassword());
+        return "Login success!";
     }
 }

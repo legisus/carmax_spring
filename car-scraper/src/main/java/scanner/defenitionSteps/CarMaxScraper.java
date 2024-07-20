@@ -29,13 +29,13 @@ public class CarMaxScraper {
     PreAuctionPage preAuctionPage;
     SigninPage signinPage;
     SimulcastPage simulcastPage;
-    private String username;
+    private String usernameFromFile;
     private String password;
 
     public CarMaxScraper() {
         carMaxAuctionCredentialsUtils = new CarMaxAuctionCredentialsUtils();
 
-        username = carMaxAuctionCredentialsUtils.getUsername();
+        usernameFromFile = carMaxAuctionCredentialsUtils.getUsername();
         password = carMaxAuctionCredentialsUtils.getPassword();
 
         driver = DiverSetUp.getDriver();
@@ -57,6 +57,16 @@ public class CarMaxScraper {
     }
 
     public void signInCarMax() {
+        basePage.waitForPageLoadComplete(3000);
+        homePage.clickSignInButton();
+        signinPage.waitForPageLoadComplete(3000);
+        signinPage.enterLogin(usernameFromFile);
+        signinPage.enterPassword(password);
+        signinPage.clickSignInButton();
+        TreadUtils.sleep(5000);
+    }
+
+    public void signInCarMax(String username, String password) {
         basePage.waitForPageLoadComplete(3000);
         homePage.clickSignInButton();
         signinPage.waitForPageLoadComplete(3000);

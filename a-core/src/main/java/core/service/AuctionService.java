@@ -5,13 +5,14 @@ import core.model.enums.Locations;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface AuctionService {
-    Auction create(Auction auction);
+    Auction createOrUpdate(Auction auction);
     Auction readById(long id);
     Auction update(Auction auction);
     void delete(long id);
     List<Auction> getAll();
 
-    Auction getAuctionByLocationAndDate(Locations location, LocalDate date);
+    Optional<Auction> getByLocationAndDate(Locations location, LocalDate date);
 }

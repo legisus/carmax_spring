@@ -22,13 +22,20 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public Auction create(Auction auction) {
-        // Check if an auction with the same location and date already exists
-        Auction existingAuction = auctionRepository.findByLocationAndDateOfAuction(auction.getLocation(), auction.getDateOfAuction());
-        if (existingAuction != null) {
-            return existingAuction;
+    public Auction createOrUpdate(Auction auction) {
+        Optional<Auction> existingAuctionOptional = auctionRepository.findByLocationAndDateOfAuction(auction.getLocation(), auction.getDateOfAuction());
+
+        if (existingAuctionOptional.isPresent()) {
+            Auction existingAuction = existingAuctionOptional.get();
+            if (!existingAuction.getTimeOfAuction().equals(auction.getTimeOfAuction())) {
+                existingAuction.setTimeOfAuction(auction.getTimeOfAuction());
+                return auctionRepository.save(existingAuction);
+            } else {
+                return existingAuction;
+            }
+        } else {
+            return auctionRepository.save(auction);
         }
-        return auctionRepository.save(auction);
     }
 
     @Override
@@ -53,7 +60,7 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public Auction getAuctionByLocationAndDate(Locations location, LocalDate date) {
-        return auctionRepository.findByLocationAndDateOfAuction(location, date);
+    public Optional<Auction> getByLocationAndDate(Locations location, LocalDate dateOfAuction) {
+        return auctionRepository.findByLocationAndDateOfAuction(location, dateOfAuction);
     }
 }

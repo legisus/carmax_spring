@@ -6,14 +6,16 @@ import java.util.List;
 
 public interface CarService {
 
-    Car addCar(Car car);
+    Car addOrUpdateCar(Car car);
 
-    Car updateCar(Car car);
+    Car updateCar(Car car); //deprecated
 
     void deleteCar(Car car);
 
     List<Car> getAll();
 
     Car getByVin(String vin);
+
+//    Car addOrUpdateCar(Car car);
 
 }
