@@ -52,6 +52,14 @@ public class MainheimScraper {
         log.info("Entering username");
     }
 
+    public void signInManheim(String username, String password) {
+        basePage.waitForPageLoadComplete(3000);
+        manheimMainPage.enterLogin(username);
+        manheimMainPage.enterPassword(password);
+        manheimMainPage.clickSignInButton();
+        log.info("Entering username");
+    }
+
     public String[] sendMmrAndRetailQueryUrl(String vin, String millage) {
         String urlQuery = "https://mmr.manheim.com/ui-mmr/?country=US&popup=false&source=man&vin=" + vin + "&mileage=" + millage;
         manheimMainPage.openPageByUrl(urlQuery);

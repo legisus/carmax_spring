@@ -1,4 +1,4 @@
-package scanner.dispetchers;
+package scanner.dispetchers.internal;
 
 import scanner.defenitionSteps.CarMaxScraper;
 import scanner.defenitionSteps.JdpScraper;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-public class DispatcherCombined {
+public class DispatcherScriptCombined {
 
 
     protected CarMaxScraper cmx;
@@ -26,7 +26,7 @@ public class DispatcherCombined {
 
 
 
-    public DispatcherCombined(CarMaxScraper cmx, JdpScraper jdp, MainheimScraper mmr) {
+    public DispatcherScriptCombined(CarMaxScraper cmx, JdpScraper jdp, MainheimScraper mmr) {
         this.cmx = cmx;
         this.jdp = jdp;
         this.mmr = mmr;
@@ -127,7 +127,7 @@ public class DispatcherCombined {
 
     public static void main(String[] args) {
 
-        DispatcherCombined dispatcher = new DispatcherCombined(new CarMaxScraper(), new JdpScraper(), new MainheimScraper());
+        DispatcherScriptCombined dispatcher = new DispatcherScriptCombined(new CarMaxScraper(), new JdpScraper(), new MainheimScraper());
 
         log.info(ConstantUtils.DESERIALIZE_MESSAGE);
         carList = InitCarListFile.initCarList(carList, path);

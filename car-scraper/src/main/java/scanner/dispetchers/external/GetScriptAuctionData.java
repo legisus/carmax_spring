@@ -1,4 +1,4 @@
-package scanner.dispetchers;
+package scanner.dispetchers.external;
 
 import core.model.Auction;
 import core.model.enums.Locations;
@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import scanner.defenitionSteps.CarMaxScraper;
 import scanner.defenitionSteps.JdpScraper;
 import scanner.defenitionSteps.MainheimScraper;
+import scanner.libraries.GetAuctionLib;
 import scanner.utils.InitCarListFile;
 import utils_api.CarUtils;
 import utils_api.ConstantUtils;
@@ -14,13 +15,13 @@ import java.time.LocalDate;
 import java.util.HashSet;
 
 @Slf4j
-public class GetAuctionData {
+public class GetScriptAuctionData {
     private CarMaxScraper cmx;
     private JdpScraper jdp;
     private MainheimScraper mmr;
     private GetAuctionLib lib;
 
-    public GetAuctionData(CarMaxScraper cmx, JdpScraper jdp, MainheimScraper mmr, GetAuctionLib getAuctionLib) {
+    public GetScriptAuctionData(CarMaxScraper cmx, JdpScraper jdp, MainheimScraper mmr, GetAuctionLib getAuctionLib) {
         this.cmx = cmx;
         this.jdp = jdp;
         this.mmr = mmr;
@@ -29,8 +30,8 @@ public class GetAuctionData {
 
     public static void main(String[] args) {
 
-        GetAuctionData dis =
-                new GetAuctionData(new CarMaxScraper(), new JdpScraper(), new MainheimScraper(), new GetAuctionLib());
+        GetScriptAuctionData dis =
+                new GetScriptAuctionData(new CarMaxScraper(), new JdpScraper(), new MainheimScraper(), new GetAuctionLib());
 
         dis.lib.setAuction(new Auction());
         dis.lib.getAuction().setLocation(Locations.IRVINE);

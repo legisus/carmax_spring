@@ -1,4 +1,4 @@
-package scanner.dispetchers;
+package scanner.dispetchers.internal;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
@@ -27,7 +27,7 @@ import java.util.*;
 @SpringBootApplication
 @ComponentScan(basePackages = {"core", "scanner"})
 @EnableJpaRepositories(basePackages = "core.repository")
-public class DispatcherAddCarsToAuction {
+public class DispatcherSpringApiAddCarsToAuction {
 
 
     protected CarMaxScraper cmx;
@@ -37,7 +37,7 @@ public class DispatcherAddCarsToAuction {
     private static final Auction auction = new Auction();
 
     @Autowired
-    public DispatcherAddCarsToAuction(CarMaxScraper cmx, JdpScraper jdp, MainheimScraper mmr) {
+    public DispatcherSpringApiAddCarsToAuction(CarMaxScraper cmx, JdpScraper jdp, MainheimScraper mmr) {
         this.cmx = cmx;
         this.jdp = jdp;
         this.mmr = mmr;
@@ -49,8 +49,8 @@ public class DispatcherAddCarsToAuction {
 
 
     public static void main(String[] args) {
-        ApplicationContext context = SpringApplication.run(DispatcherAddCarsToAuction.class, args);
-        SpringApplication.run(DispatcherAddCarsToAuction.class, args);
+        ApplicationContext context = SpringApplication.run(DispatcherSpringApiAddCarsToAuction.class, args);
+        SpringApplication.run(DispatcherSpringApiAddCarsToAuction.class, args);
 
         auction.setLocation(Locations.MURRIETA);
         auction.setDateOfAuction(LocalDate.of(2024, 7, 22));
@@ -58,7 +58,7 @@ public class DispatcherAddCarsToAuction {
 
         AuctionService auctionService = context.getBean(AuctionService.class);
         CarService carService = context.getBean(CarService.class);
-        DispatcherAddCarsToAuction dispatcher = context.getBean(DispatcherAddCarsToAuction.class);
+        DispatcherSpringApiAddCarsToAuction dispatcher = context.getBean(DispatcherSpringApiAddCarsToAuction.class);
 //        DispatcherAddCarsToAuction dispatcher = new DispatcherAddCarsToAuction(new CarMaxScraper(), new JdpScraper(), new MainheimScraper());
 
         auctionService.createOrUpdate(auction);

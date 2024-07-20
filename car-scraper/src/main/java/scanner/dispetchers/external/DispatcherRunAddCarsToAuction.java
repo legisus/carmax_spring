@@ -1,4 +1,4 @@
-package scanner.dispetchers;
+package scanner.dispetchers.external;
 
 import core.model.Auction;
 import core.model.Car;
@@ -23,7 +23,11 @@ public class DispatcherRunAddCarsToAuction {
     private final CarService carService;
 
     @Autowired
-    public DispatcherRunAddCarsToAuction(CarMaxScraper cmx, JdpScraper jdp, MainheimScraper mmr, AuctionService auctionService, CarService carService) {
+    public DispatcherRunAddCarsToAuction(CarMaxScraper cmx,
+                                         JdpScraper jdp,
+                                         MainheimScraper mmr,
+                                         AuctionService auctionService,
+                                         CarService carService) {
         this.cmx = cmx;
         this.jdp = jdp;
         this.mmr = mmr;

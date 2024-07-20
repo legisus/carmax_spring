@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import rest.dto.AuctionRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import scanner.dispetchers.DispatcherRunAddCarsToAuction;
+import scanner.dispetchers.external.DispatcherRunAddCarsToAuction;
 
 @RestController
 @RequestMapping("/api/auction")

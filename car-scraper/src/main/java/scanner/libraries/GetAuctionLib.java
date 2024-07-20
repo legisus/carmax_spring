@@ -1,11 +1,10 @@
-package scanner.dispetchers;
+package scanner.libraries;
 
 import core.model.Auction;
 import core.model.Car;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Setter
