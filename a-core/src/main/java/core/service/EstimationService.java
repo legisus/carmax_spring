@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface EstimationService {
 
-    boolean addEstimation(Estimation estimation);
+    Estimation addOrUpdateEstimation(Estimation estimation);
 
     boolean deleteEstimation(Long id);
 

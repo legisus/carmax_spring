@@ -14,6 +14,7 @@ import lombok.*;
 public class Balance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="balance_id")
     private Long id;
     private Integer amount;
     private Integer buyingPower;

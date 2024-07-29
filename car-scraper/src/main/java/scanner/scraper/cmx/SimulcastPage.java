@@ -16,10 +16,12 @@ public class SimulcastPage extends BasePage {
         super(webDriver);
     }
 
-    @FindBy(xpath = "//input[@type='checkbox']")
+//    @FindBy(xpath = "//input[@type='checkbox']")
+    @FindBy(xpath = "//div[@class='MuiFormControl-root css-13sljp9']/hzn-checkbox[@name='acknowledgedTermsAndConditions']")
     private WebElement acknowledgeCheckbox;
 
-    @FindBy(xpath = "//button[text()='CHECK IN']")
+//    @FindBy(xpath = "//button[text()='CHECK IN']")
+    @FindBy(xpath = "//hzn-button[@type='submit']")
     private WebElement checkInButton;
 
     @FindBy(xpath = "//span[@class='view-lane XXX-lane-col ']")

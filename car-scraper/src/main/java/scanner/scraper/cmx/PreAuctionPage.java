@@ -78,7 +78,8 @@ public class PreAuctionPage extends BasePage {
                     log.info("TotalCarsWithAdd:" + totalCarsWithAdd);
                 }
             } else {
-                scrollDownByPercentage(1, js); // Scroll down if no element was found
+                log.info("Scroll down if no element was found");
+                scrollDownByPercentage(1, js);
                 TreadUtils.sleep(1000);
                 i = i - 1;
                 if (countOfWebElementNull >= 10) {

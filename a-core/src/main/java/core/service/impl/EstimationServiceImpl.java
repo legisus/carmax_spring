@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-//@Transactional
 public class EstimationServiceImpl implements EstimationService {
 
     private final EstimationRepository estimationRepository;
@@ -20,9 +19,15 @@ public class EstimationServiceImpl implements EstimationService {
     }
 
     @Override
-    public boolean addEstimation(Estimation estimation) {
-        estimationRepository.save(estimation);
-        return true;
+    public Estimation addOrUpdateEstimation(Estimation estimation) {
+        if (estimation.getId() != null) {
+            Optional<Estimation> existingEstimation = estimationRepository.findById(estimation.getId());
+            if (existingEstimation.isPresent()) {
+                Estimation updatedEstimation = mergeEstimations(existingEstimation.get(), estimation);
+                return estimationRepository.save(updatedEstimation);
+            }
+        }
+        return estimationRepository.save(estimation);
     }
 
     @Override
@@ -40,5 +45,25 @@ public class EstimationServiceImpl implements EstimationService {
     public boolean updateEstimation(Estimation estimation) {
         estimationRepository.save(estimation);
         return true;
+    }
+
+
+    private Estimation mergeEstimations(Estimation existing, Estimation newEstimation) {
+        if (newEstimation.getEstimationJDPower() != null) {
+            existing.setEstimationJDPower(newEstimation.getEstimationJDPower());
+        }
+        if (newEstimation.getEstimationKBBPrivateParty() != null) {
+            existing.setEstimationKBBPrivateParty(newEstimation.getEstimationKBBPrivateParty());
+        }
+        if (newEstimation.getEstimationKBBDealerRetail() != null) {
+            existing.setEstimationKBBDealerRetail(newEstimation.getEstimationKBBDealerRetail());
+        }
+        if (newEstimation.getEstimationManheimMMR() != null) {
+            existing.setEstimationManheimMMR(newEstimation.getEstimationManheimMMR());
+        }
+        if (newEstimation.getEstimatedRetailValue() != null) {
+            existing.setEstimatedRetailValue(newEstimation.getEstimatedRetailValue());
+        }
+        return existing;
     }
 }

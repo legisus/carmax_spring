@@ -8,6 +8,7 @@ import lombok.*;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -15,7 +16,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 @Table(name = "cars")
 public class Car {
     @Id
@@ -36,8 +36,6 @@ public class Car {
     private String color;
     private Integer mileage;
     private Integer soldPrice;
-//    private LocalDate dateOfAuction;
-//    private String location;
     private Integer runNumber;
     private String lane;
     private String defects;
@@ -48,7 +46,7 @@ public class Car {
     private Auction auction;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", referencedColumnName = "id")
+    @JoinColumn(name = "estimation_id", referencedColumnName = "estimation_id")
     private Estimation estimation;
 
     @ManyToMany(mappedBy = "mySelectedCars", cascade = CascadeType.ALL)
@@ -60,6 +58,19 @@ public class Car {
 
     @OneToMany(mappedBy = "car")
     private List<Bid> bids;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return Objects.equals(id, car.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
     @Override
     public String toString() {

@@ -15,4 +15,6 @@ public interface AuctionService {
     List<Auction> getAll();
 
     Optional<Auction> getByLocationAndDate(Locations location, LocalDate date);
+
+    Optional<Auction> readByIdWithCars(long id);
 }

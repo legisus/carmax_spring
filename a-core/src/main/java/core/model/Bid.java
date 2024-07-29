@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 public class Bid {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="bid_id")
     private Long id;
     private Integer bidPrice;
     private LocalDateTime dateTime;

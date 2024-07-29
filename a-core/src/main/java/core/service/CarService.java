@@ -3,6 +3,7 @@ package core.service;
 import core.model.Car;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CarService {
 
@@ -15,6 +16,8 @@ public interface CarService {
     List<Car> getAll();
 
     Car getByVin(String vin);
+
+    Optional<Car> findCarByDetails(Integer year, String make, String model, Integer mileage);
 
 //    Car addOrUpdateCar(Car car);
 

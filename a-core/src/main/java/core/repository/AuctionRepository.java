@@ -19,4 +19,8 @@ public interface AuctionRepository extends JpaRepository<Auction, Long> {
 
     @Query("SELECT a FROM Auction a LEFT JOIN FETCH a.cars WHERE a.location = :location AND a.dateOfAuction = :date")
     Optional<Auction> findByLocationAndDateOfAuction(@Param("location") Locations location, @Param("date") LocalDate date);
+
+    @Query("SELECT a FROM Auction a LEFT JOIN FETCH a.cars WHERE a.id = :id")
+    Optional<Auction> findByIdWithCars(@Param("id") Long id);
+
 }

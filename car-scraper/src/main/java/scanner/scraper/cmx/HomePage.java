@@ -39,7 +39,8 @@ public class HomePage extends BasePage {
 //    @FindBy(xpath = "//tr[@class='gridrow']//td[contains(text(),'+" city "+')]/following-sibling::td/a[contains(text(),'Available')]")
 //    private WebElement availableAuction;
 
-    @FindBy(xpath = "//*[@id='simulcast-link']")
+//    @FindBy(xpath = "//*[@id='simulcast-link']")
+    @FindBy(xpath = "//a[text()='SIMULCAST']")
     private WebElement simulcastLink;
 
     @FindBy(xpath = "//a[contains(text(),'Sign out')]")

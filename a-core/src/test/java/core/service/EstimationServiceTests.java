@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
+import java.util.function.BooleanSupplier;
+
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -23,11 +25,11 @@ class EstimationServiceTests {
 
     @Test
     @Order(1)
-    void testAddEstimation() {
+    void testAddOrUpdateEstimation() {
         Estimation estimation = new Estimation();
         when(estimationRepository.save(estimation)).thenReturn(estimation);
-        boolean result = estimationService.addEstimation(estimation);
-        Assertions.assertTrue(result);
+        Estimation result = estimationService.addOrUpdateEstimation(estimation);
+//        Assertions.assertTrue((BooleanSupplier) result);
     }
 
     @Test

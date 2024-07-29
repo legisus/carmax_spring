@@ -63,4 +63,9 @@ public class AuctionServiceImpl implements AuctionService {
     public Optional<Auction> getByLocationAndDate(Locations location, LocalDate dateOfAuction) {
         return auctionRepository.findByLocationAndDateOfAuction(location, dateOfAuction);
     }
+
+    @Override
+    public Optional<Auction> readByIdWithCars(long id) {
+        return auctionRepository.findByIdWithCars(id);
+    }
 }

@@ -1,5 +1,7 @@
 package scanner.defenitionSteps;
 
+import core.model.Auction;
+import core.model.Estimation;
 import scanner.credentials.CarMaxAuctionCredentialsUtils;
 import scanner.scraper.BasePage;
 import scanner.scraper.cmx.HomePage;
@@ -16,6 +18,7 @@ import utils_api.CarUtils;
 import utils_api.TreadUtils;
 import core.model.Car;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -205,30 +208,63 @@ public class CarMaxScraper {
         log.info("End of the loop");
     }
 
+//    private String buildCarNotes(Car car) {
+//        StringBuilder sb = new StringBuilder();
+//        String defects = car.getDefects();
+//
+//        if(defects != null && !defects.isEmpty()) {
+////            if(!defects.contains("Announcement") && car.getEstimation().getEstimationManheimMMR() < 10000 && car.getEstimation().getEstimationManheimMMR() > 1000) {
+////                sb.append("Deal! \n");
+////            }
+//
+//        }
+//
+////        sb.append("Est: $").append(getEstimationRange(car)).append("\n");
+//        sb.append("Est: $").append(getEstimationRange(car)).append("\n")
+//                .append("Ret: $").append(ConvertorUtils.getEstimationStringK(car.getEstimation().getEstimatedRetailValue()))
+//                .append("\n");
+//
+//        if(car.getMileage() < 100000 && car.getYear() > 2012) {
+//            if(defects.contains("Engine") || defects.contains("Transmission") || defects.contains("Runner")
+//                    || defects.contains("Key") || defects.contains("Keys")) {
+//                sb.append(" !Tur:").append(ConvertorUtils.getEstimationStringK(car.getMileage())).append("k");
+//            }else {
+//                sb.append(" Tur:").append(ConvertorUtils.getEstimationStringK(car.getMileage())).append("k");
+//            }
+//        }else {
+//            sb.append(" odo:").append(ConvertorUtils.getEstimationStringK(car.getMileage())).append("k");
+//        }
+//        return sb.toString();
+//    }
+
     private String buildCarNotes(Car car) {
         StringBuilder sb = new StringBuilder();
         String defects = car.getDefects();
 
-        if(defects != null && !defects.isEmpty()) {
-//            if(!defects.contains("Announcement") && car.getEstimation().getEstimationManheimMMR() < 10000 && car.getEstimation().getEstimationManheimMMR() > 1000) {
-//                sb.append("Deal! \n");
-//            }
-
+        if (defects != null && !defects.isEmpty()) {
+            // Uncomment and modify the following if condition if needed
+            // if (!defects.contains("Announcement") && car.getEstimation().getEstimationManheimMMR() < 10000 && car.getEstimation().getEstimationManheimMMR() > 1000) {
+            //     sb.append("Deal! \n");
+            // }
         }
 
-//        sb.append("Est: $").append(getEstimationRange(car)).append("\n");
-        sb.append("Est: $").append(getEstimationRange(car)).append("\n")
-                .append("Ret: $").append(ConvertorUtils.getEstimationStringK(car.getEstimation().getEstimatedRetailValue()))
-                .append("\n");
+        sb.append("Est: $").append(getEstimationRange(car)).append("\n");
 
-        if(car.getMileage() < 100000 && car.getYear() > 2012) {
-            if(defects.contains("Engine") || defects.contains("Transmission") || defects.contains("Runner")
-                    || defects.contains("Key") || defects.contains("Keys")) {
+        if (car.getEstimation() != null && car.getEstimation().getEstimatedRetailValue() != null) {
+            sb.append("Ret: $").append(ConvertorUtils.getEstimationStringK(car.getEstimation().getEstimatedRetailValue()))
+                    .append("\n");
+        } else {
+            sb.append("Ret: N/A\n"); // or handle the null case appropriately
+        }
+
+        if (car.getMileage() < 100000 && car.getYear() > 2012) {
+            if (defects != null && (defects.contains("Engine") || defects.contains("Transmission") || defects.contains("Runner")
+                    || defects.contains("Key") || defects.contains("Keys"))) {
                 sb.append(" !Tur:").append(ConvertorUtils.getEstimationStringK(car.getMileage())).append("k");
-            }else {
+            } else {
                 sb.append(" Tur:").append(ConvertorUtils.getEstimationStringK(car.getMileage())).append("k");
             }
-        }else {
+        } else {
             sb.append(" odo:").append(ConvertorUtils.getEstimationStringK(car.getMileage())).append("k");
         }
         return sb.toString();
@@ -241,36 +277,47 @@ public class CarMaxScraper {
 //    }
 
     private String getEstimationRange(Car car) {
-        int min = 0;
-        int max = 0;
-        if (car.getEstimation().getEstimationJDPower() != null) {
-            min = car.getEstimation().getEstimationJDPower();
-            max = car.getEstimation().getEstimationJDPower();
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+
+        Estimation estimation = car.getEstimation();
+        if (estimation == null) {
+            return "N/A";
         }
-        if (car.getEstimation().getEstimationKBBPrivateParty() != null) {
-            if (min > car.getEstimation().getEstimationKBBPrivateParty()) {
-                min = car.getEstimation().getEstimationKBBPrivateParty();
-            }
-            if (max < car.getEstimation().getEstimationKBBPrivateParty()) {
-                max = car.getEstimation().getEstimationKBBPrivateParty();
-            }
+
+        if (estimation.getEstimationJDPower() != null) {
+            min = estimation.getEstimationJDPower();
+            max = estimation.getEstimationJDPower();
         }
-        if (car.getEstimation().getEstimationKBBDealerRetail() != null) {
-            if (min > car.getEstimation().getEstimationKBBDealerRetail()) {
-                min = car.getEstimation().getEstimationKBBDealerRetail();
+        if (estimation.getEstimationKBBPrivateParty() != null) {
+            if (min > estimation.getEstimationKBBPrivateParty()) {
+                min = estimation.getEstimationKBBPrivateParty();
             }
-            if (max < car.getEstimation().getEstimationKBBDealerRetail()) {
-                max = car.getEstimation().getEstimationKBBDealerRetail();
+            if (max < estimation.getEstimationKBBPrivateParty()) {
+                max = estimation.getEstimationKBBPrivateParty();
             }
         }
-        if (car.getEstimation().getEstimationManheimMMR() != null) {
-            if (min > car.getEstimation().getEstimationManheimMMR()) {
-                min = car.getEstimation().getEstimationManheimMMR();
+        if (estimation.getEstimationKBBDealerRetail() != null) {
+            if (min > estimation.getEstimationKBBDealerRetail()) {
+                min = estimation.getEstimationKBBDealerRetail();
             }
-            if (max < car.getEstimation().getEstimationManheimMMR()) {
-                max = car.getEstimation().getEstimationManheimMMR();
+            if (max < estimation.getEstimationKBBDealerRetail()) {
+                max = estimation.getEstimationKBBDealerRetail();
             }
         }
+        if (estimation.getEstimationManheimMMR() != null) {
+            if (min > estimation.getEstimationManheimMMR()) {
+                min = estimation.getEstimationManheimMMR();
+            }
+            if (max < estimation.getEstimationManheimMMR()) {
+                max = estimation.getEstimationManheimMMR();
+            }
+        }
+
+        if (min == Integer.MAX_VALUE || max == Integer.MIN_VALUE) {
+            return "N/A";
+        }
+
         return ConvertorUtils.getEstimationStringK(min) + "-" + ConvertorUtils.getEstimationStringK(max) + "k";
     }
 
@@ -284,6 +331,7 @@ public class CarMaxScraper {
         openCarMaxActionPage();
         TreadUtils.sleep(7000);
         signInCarMax();
+
         TreadUtils.sleep(7000);
         homePage.clickSimulcastLink();
         TreadUtils.sleep(7000);
@@ -297,4 +345,71 @@ public class CarMaxScraper {
         TreadUtils.sleep(5000);
         return simulcastPage.getLanePanelList();
     }
+
+    public void simulcastRun() {
+        TreadUtils.sleep(7000);
+        homePage.clickSimulcastLink();
+        TreadUtils.sleep(7000);
+//        simulcastPage.activateAllAuctions();
+        simulcastPage.clickAcknowledgeCheckbox();
+        TreadUtils.sleep(500);
+        simulcastPage.clickCheckInButton();
+        TreadUtils.sleep( 60000);
+        simulcastPage.activateAllLines();
+        TreadUtils.sleep(5000);
+    }
+
+    public List<WebElement> getDataFromSimulcast() {
+        TreadUtils.sleep(7000);
+        return simulcastPage.getLanePanelList();
+    }
+
+    public void saveNotesWithEstimation(Auction auction) {
+        final int maxNullVinOccurrences = 10;
+        int nullVinCount = 0;
+        int index = 0;
+
+        List<Car> listCars = new ArrayList<>(auction.getCars());
+
+        while (nullVinCount <= maxNullVinOccurrences) {
+            String vin = preAuctionPage.openCarByIndexReturnVin(index);
+            if (vin == null) {
+                nullVinCount++;
+                log.info("Null VIN occurrence: " + nullVinCount);
+            } else {
+                nullVinCount = 0; // Reset the count for consecutive non-null VINs
+                final Car car = listCars.stream()
+                        .filter(c -> vin.equals(c.getVin()))
+                        .findFirst()
+                        .orElse(null);
+
+                if (car != null) {
+                    log.info("Car found: " + car);
+                    preAuctionPage.addNotes(index, buildCarNotes(car));
+                } else {
+                    log.info("No car found with VIN: " + vin);
+                    preAuctionPage.addNotes(index, "NotProcessed");
+                }
+            }
+            index++; // Increment index here to ensure it's effectively final within any lambda
+        }
+
+        log.info("End of the loop");
+    }
+
+//    private String buildCarNotes(Car car) {
+//        StringBuilder notes = new StringBuilder();
+//
+//        if (car.getEstimation() != null) {
+//            notes.append("Estimation JDPower: ").append(car.getEstimation().getEstimationJDPower()).append("\n");
+//            notes.append("Estimation KBB Private Party: ").append(car.getEstimation().getEstimationKBBPrivateParty()).append("\n");
+//            notes.append("Estimation KBB Dealer Retail: ").append(car.getEstimation().getEstimationKBBDealerRetail()).append("\n");
+//            notes.append("Estimation Manheim MMR: ").append(car.getEstimation().getEstimationManheimMMR()).append("\n");
+//            notes.append("Estimated Retail Value: ").append(car.getEstimation().getEstimatedRetailValue()).append("\n");
+//        } else {
+//            notes.append("No estimation available.\n");
+//        }
+//
+//        return notes.toString();
+//    }
 }

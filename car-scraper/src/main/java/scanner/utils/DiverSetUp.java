@@ -18,7 +18,7 @@ public class DiverSetUp {
         options.addArguments("--disable-extensions");
         options.addArguments("--disable-infobars");
         options.addArguments("start-maximized");
-        options.addArguments("incognito");
+//        options.addArguments("incognito");
 
         driver = new ChromeDriver(options);
     }
