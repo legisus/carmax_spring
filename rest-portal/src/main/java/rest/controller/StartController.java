@@ -102,7 +102,7 @@ public class StartController {
 
     @GetMapping("simulcast-run")
     public String simulcast() {
-        auctionDataDisp.run();
+        simulcastDisp.run();
         return "Data scrap updated success!";
     }
 

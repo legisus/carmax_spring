@@ -19,6 +19,6 @@ public interface CarService {
 
     Optional<Car> findCarByDetails(Integer year, String make, String model, Integer mileage);
 
-//    Car addOrUpdateCar(Car car);
+    void updateSoldPriceIfValid(Integer year, String make, String model, Integer mileage, Integer soldPrice);
 
 }

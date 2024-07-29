@@ -25,8 +25,8 @@ public class DispatcherParseAfterAuctionInfo {
 
     static List<Car> carList = new ArrayList<>();
 
-    static String location = Locations.IRVINE.getLocation();
-    static LocalDate localDateOfAuction = LocalDate.of(2024, 7, 24);
+    static String location = Locations.MURRIETA.getLocation();
+    static LocalDate localDateOfAuction = LocalDate.of(2024, 7, 29);
     static String path = "/Users/macbook/Documents/" + localDateOfAuction + "_" + location + "_carListAfterAuction.properties";
 
     public DispatcherParseAfterAuctionInfo(CarMaxScraper cmx, SimulcastScraperLibrary simulcastScraperLibrary) {
@@ -62,9 +62,13 @@ public class DispatcherParseAfterAuctionInfo {
             log.info("* * * End save into log * * *");
         }
 
+
+
         log.info(ConstantUtils.SERIALIZE_MESSAGE);
         CarUtils.saveCarsListToJsonFile(carList, path);
         log.info(ConstantUtils.SUCCESS_MESSAGE);
     }
+
+
 
 }

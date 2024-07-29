@@ -359,6 +359,10 @@ public class CarMaxScraper {
         TreadUtils.sleep(5000);
     }
 
+    public List<WebElement> simulcastPageGetData() {
+        return simulcastPage.getLanePanelList();
+    }
+
     public List<WebElement> getDataFromSimulcast() {
         TreadUtils.sleep(7000);
         return simulcastPage.getLanePanelList();

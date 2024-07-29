@@ -120,4 +120,22 @@ public class CarServiceImpl implements CarService {
     public Optional<Car> findCarByDetails(Integer year, String make, String model, Integer mileage) {
         return carRepository.findByYearAndMakeAndModelAndMileage(year, make, model, mileage);
     }
+
+    @Override
+    public void updateSoldPriceIfValid(Integer year, String make, String model, Integer mileage, Integer soldPrice) {
+        if (soldPrice <= 0) {
+            log.info("Sold price is not greater than 0. Skipping update.");
+            return;
+        }
+
+        Optional<Car> carOptional = carRepository.findByYearAndMakeAndModelAndMileage(year, make, model, mileage);
+        if (carOptional.isPresent()) {
+            Car car = carOptional.get();
+            car.setSoldPrice(soldPrice);
+            carRepository.save(car);
+            log.info("Updated sold price for car: {}", car);
+        } else {
+            log.info("No car found with year: {}, make: {}, model: {}, mileage: {}", year, make, model, mileage);
+        }
+    }
 }
