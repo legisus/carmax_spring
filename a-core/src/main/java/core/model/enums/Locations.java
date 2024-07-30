@@ -60,7 +60,8 @@ public enum Locations {
     IRVINE("California", "Irvine", "Irvine"),
     FREMONT("California", "Fremont", "Fremont"),
     VIRGINIA_BEACH("Virginia", "Virginia Beach", "Virginia Beach"),
-    OCEANSIDE("California", "Oceanside", "Oceanside");
+    OCEANSIDE("California", "Oceanside", "Oceanside"),
+    DUARTE("California", "Duarte", "Duarte");
 
     private final String state;
     private final String location;
