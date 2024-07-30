@@ -1,0 +1,60 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+header, nav, .container {
+    width: 100%;
+    text-align: center;
+}
+
+header {
+    background-color: #004080; /* Dark blue background for header */
+    color: white;
+    padding: 10px 0;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: inline-block;
+}
+
+/* Styling for the main container */
+.container {
+    background-color: white;
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Adding a subtle shadow to the container */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2; /* Light grey background for headers */
+}
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 600px) {
+    nav a {
+        padding: 10px 5px;
+    }
+
+    .container {
+        width: 100%;
+    }
+}
