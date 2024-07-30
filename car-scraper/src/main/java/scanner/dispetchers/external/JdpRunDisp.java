@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import scanner.defenitionSteps.JdpScraper;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -29,7 +28,7 @@ public class JdpRunDisp {
     public void run() {
         List<Car> carsWithoutJdpEstimation = carService.getAll().stream()
                 .filter(car -> car.getEstimation() == null || car.getEstimation().getEstimationJDPower() == null || car.getEstimation().getEstimationJDPower() < 1)
-                .collect(Collectors.toList());
+                .toList();
 
         if (carsWithoutJdpEstimation.isEmpty()) {
             log.info("No JDP estimations need updating.");

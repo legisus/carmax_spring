@@ -50,43 +50,49 @@ public class JdpScraper {
 
     public String enterJdpEstimateData(String vin, String mileage) {
         TreadUtils.sleep(5000);
-
         jdpEstimatePage.enterVin(vin);
+
         jdpEstimatePage.clickLookupVinButton();
         TreadUtils.sleep(5000);
 
-        jdpEstimatePage.clickNextButton();
-        jdpEstimatePage.waitForAjaxToComplete(3000);
+        try {
+            jdpEstimatePage.clickNextButton();
+            jdpEstimatePage.waitForAjaxToComplete(3000);
 
-        jdpEstimatePage.enterVehicleMileage(mileage);
-        jdpEstimatePage.enterVehicleZipcode("90504");
-        jdpEstimatePage.clickNextButton();
-        jdpEstimatePage.waitForAjaxToComplete(3000);
+            jdpEstimatePage.enterVehicleMileage(mileage);
+            jdpEstimatePage.enterVehicleZipcode("90504");
+            jdpEstimatePage.clickNextButton();
+            jdpEstimatePage.waitForAjaxToComplete(3000);
 
-        jdpEstimatePage.clickSkipVehicleOptionsButton();
-        jdpEstimatePage.waitForAjaxToComplete(3000);
+            jdpEstimatePage.clickSkipVehicleOptionsButton();
+            jdpEstimatePage.waitForAjaxToComplete(3000);
 
-        jdpEstimatePage.clickVehicleDefectsNo();
-        jdpEstimatePage.clickVehicleSmokeNo();
-        jdpEstimatePage.clickVehicleKeys2();
-        jdpEstimatePage.clickVehicleLeasedNo();
-        jdpEstimatePage.clickVehicleLoanNo();
-        jdpEstimatePage.clickNextButton();
-        jdpEstimatePage.waitForAjaxToComplete(3000);
+            jdpEstimatePage.clickVehicleDefectsNo();
+            jdpEstimatePage.clickVehicleSmokeNo();
+            jdpEstimatePage.clickVehicleKeys2();
+            jdpEstimatePage.clickVehicleLeasedNo();
+            jdpEstimatePage.clickVehicleLoanNo();
+            jdpEstimatePage.clickNextButton();
+            jdpEstimatePage.waitForAjaxToComplete(3000);
 
 
-        String stingValue = jdpEstimatePage.getRoughValue();
-        log.info("The rough value is: " + stingValue + " for vin: " + vin);
+            String stingValue = jdpEstimatePage.getRoughValue();
+            log.info("The rough value is: {} for vin: {}", stingValue, vin);
 
-        jdpEstimatePage.clickBackButton();
-        jdpEstimatePage.waitForAjaxToComplete(1000);
-        jdpEstimatePage.clickBackButton();
-        jdpEstimatePage.waitForAjaxToComplete(1000);
-        jdpEstimatePage.clickBackButton();
-        jdpEstimatePage.waitForAjaxToComplete(1000);
-        jdpEstimatePage.clickBackButton();
-        jdpEstimatePage.waitForAjaxToComplete(1000);
+            jdpEstimatePage.clickBackButton();
+            jdpEstimatePage.waitForAjaxToComplete(1000);
+            jdpEstimatePage.clickBackButton();
+            jdpEstimatePage.waitForAjaxToComplete(1000);
+            jdpEstimatePage.clickBackButton();
+            jdpEstimatePage.waitForAjaxToComplete(1000);
+            jdpEstimatePage.clickBackButton();
+            jdpEstimatePage.waitForAjaxToComplete(1000);
 
-        return stingValue;
+            return stingValue;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            log.info("The rough value is $1: {} will be stored", vin);
+            return "1";
+        }
     }
 }
