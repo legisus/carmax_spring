@@ -188,9 +188,9 @@ public class PreAuctionPage extends BasePage {
 
             //realize kyboard input
             Actions actions = new Actions(driver);
-            actions.keyDown(Keys.CONTROL) // Presses the Control key down.
+            actions.keyDown(Keys.COMMAND) // Presses the Control key down.
                     .sendKeys("a") // Sends the 'a' key to select all text.
-                    .keyUp(Keys.CONTROL) // Releases the Control key.
+                    .keyUp(Keys.COMMAND) // Releases the Control key.
                     .sendKeys(Keys.DELETE) // Sends the Delete key to delete the selected text.
                     .sendKeys(notes) // Types the new text into the element.
                     .perform();

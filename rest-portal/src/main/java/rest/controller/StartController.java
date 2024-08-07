@@ -1,15 +1,25 @@
 package rest.controller;
 
 import core.model.Auction;
+import core.model.enums.Locations;
 import core.service.AuctionService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.hc.client5.http.auth.InvalidCredentialsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rest.dto.AuctionRequestDto;
 import rest.dto.FilePathDto;
 import rest.dto.LoginDto;
 import scanner.dispetchers.external.*;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Slf4j
 @RestController
 @RequestMapping("/start")
 public class StartController {
@@ -54,10 +64,23 @@ public class StartController {
         return "Auction saved!";
     }
 
+    @GetMapping("/locations")
+    public List<String> getLocations() {
+        return Arrays.stream(Locations.values())
+                .map(Locations::getLocation)
+                .collect(Collectors.toList());
+    }
+
     @PostMapping("login/carmax")
-    public String loginCarMaxPage(@Valid @RequestBody LoginDto loginDto) throws Exception {
-        loginToCarmaxPageDisp.run(loginDto.getUsername(), loginDto.getPassword());
-        return "Login success!";
+    public ResponseEntity<String> loginCarMaxPage(@Valid @RequestBody LoginDto loginDto) {
+        try {
+            loginToCarmaxPageDisp.run(loginDto.getUsername(), loginDto.getPassword());
+            return ResponseEntity.ok("Login success!");
+        } catch (Exception e) {
+            // Log the exception for debugging purposes
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password.");
+        }
     }
 
     @PostMapping("notes")
@@ -89,17 +112,6 @@ public class StartController {
         return "JDP estimations updated success!";
     }
 
-//    @PostMapping("data-scrap")
-//    public String dataScrap(@Valid @RequestBody AuctionRequestDto auctionRequestDto) throws Exception {
-//        Auction auction = new Auction();
-//        auction.setLocation(auctionRequestDto.getLocation());
-//        auction.setDateOfAuction(auctionRequestDto.getDateOfAuction());
-//        auction.setTimeOfAuction(auctionRequestDto.getTimeOfAuction());
-//
-//        auctionDataDisp.run(auction);
-//        return "Auction saved!";
-//    }
-
     @GetMapping("simulcast-run")
     public String simulcast() {
         simulcastDisp.run();
@@ -115,6 +127,12 @@ public class StartController {
     @PostMapping("convert")
     public String convertHtmlToJsonFile(@Valid @RequestBody FilePathDto filePathDto) throws Exception {
         return convertHtmlToJsonDisp.convertHtmlFileToJsonFile(filePathDto.getInputFilePath(), filePathDto.getOutputFilePath());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception e) {
+        log.error(e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
     }
 
 }

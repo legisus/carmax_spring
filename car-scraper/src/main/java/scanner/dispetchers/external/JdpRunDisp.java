@@ -27,7 +27,7 @@ public class JdpRunDisp {
 
     public void run() {
         List<Car> carsWithoutJdpEstimation = carService.getAll().stream()
-                .filter(car -> car.getEstimation() == null || car.getEstimation().getEstimationJDPower() == null || car.getEstimation().getEstimationJDPower() < 1)
+                .filter(car -> car.getEstimation() == null || car.getEstimation().getEstimationJDPower() == null)
                 .toList();
 
         if (carsWithoutJdpEstimation.isEmpty()) {
